@@ -51,14 +51,14 @@ Figma · React · Tailwind · Claude · GitHub
 
 ## 🌐 Portfolio
 
-👉 [Visit my portfolio](https://your-domain.com)
+👉 [Visit my portfolio](https://katejieyu.com)
 
 ---
 
 ## 🤝 Let’s connect
 
-- LinkedIn: https://linkedin.com/in/your-link
-- Email: your@email.com
+- LinkedIn: https://linkedin.com/in/katejieyu
+- Email: katejieyu@gmail.com
 
 ---
 
