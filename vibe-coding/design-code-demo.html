@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Design → Code → Demo · Kate Jie Yu</title>
+  <meta name="description" content="How I use AI-assisted vibe coding to build working product prototypes — SAP Fiori demos, portfolio infrastructure, and internal tools — from design intent to running code.">
+  <link rel="shortcut icon" type="image/x-icon" href="../img/KJY_logo_bar.jpg">
+  <link rel="apple-touch-icon" href="../img/KJY_logo_bar.jpg">
+  <link rel="stylesheet" href="../style/theme.css">
+  <link rel="stylesheet" href="../style/base.css">
+  <link rel="stylesheet" href="../style/components.css">
+  <link rel="stylesheet" href="../style/case-study.css">
+  <style>
+    /* ── PAGE-SPECIFIC: build cards grid ── */
+    .vc-builds {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #e5e7eb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .vc-build {
+      background: #fff;
+      padding: 28px 24px;
+    }
+    .vc-build:hover { background: #fafafa; }
+    .vc-build__tag {
+      display: inline-block;
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #6b7280;
+      background: #f3f4f6;
+      border-radius: 4px;
+      padding: 2px 7px;
+      margin-bottom: 14px;
+    }
+    .vc-build__title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .vc-build__desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .vc-build__stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .vc-build__chip {
+      font-size: 0.6875rem;
+      color: #374151;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 2px 9px;
+    }
+    @media (max-width: 900px) {
+      .vc-builds { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .vc-builds { grid-template-columns: 1fr; }
+    }
+
+    /* ── Process steps ── */
+    .vc-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #e5e7eb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .vc-step {
+      background: #fff;
+      padding: 24px 22px;
+    }
+    .vc-step__num {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+    .vc-step__title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+    .vc-step__desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    @media (max-width: 900px) {
+      .vc-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .vc-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── Skill rows ── */
+    .vc-skills {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: #e5e7eb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .vc-skill-row {
+      background: #fff;
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 28px;
+      align-items: start;
+    }
+    .vc-skill-row:hover { background: #fafafa; }
+    .vc-skill-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #111827;
+    }
+    .vc-skill-desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .vc-skill-example {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      line-height: 1.55;
+      font-style: italic;
+    }
+    @media (max-width: 768px) {
+      .vc-skill-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+      <div class="nav__container">
+        <a href="../index.html" class="nav__logo">
+          <img src="../img/KJY_logo_bar.jpg" alt="Kate Jie Yu" width="48" height="48">
+        </a>
+              <ul class="nav__menu" id="nav-menu">
+        <li><a href="../index.html" class="nav__link">Systems</a></li>
+        <li><a href="../index.html#vibe-coding" class="nav__link">Vibe Coding</a></li>
+        <li><a href="../index.html#about" class="nav__link">About</a></li>
+        <li><a href="../kateyu-resume.html" class="nav__link nav__link--cta">Resume</a></li>
+      </ul>
+        <button
+            class="nav__toggle"
+            id="nav-toggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="nav-menu">
+          <span class="nav__toggle-line"></span>
+          <span class="nav__toggle-line"></span>
+          <span class="nav__toggle-line"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" role="main">
+    <div class="container">
+
+      <a href="../index.html#vibe-coding" class="cs-back">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 12L6 8l4-4"/></svg>
+        Vibe Coding Work
+      </a>
+
+      <!-- ══ PAGE HEADER ══ -->
+      <header class="cs-header">
+        <div class="cs-eyebrow">
+          <span class="cs-pill">Vibe Coding</span>
+          <span class="cs-pill cs-pill--grey">AI-Assisted Prototyping</span>
+          <span class="cs-pill cs-pill--grey">Design → Code</span>
+        </div>
+
+        <h1 class="cs-h1">
+          Design → Code → Demo<br>
+          <span>AI-Assisted Prototype Builds</span>
+        </h1>
+
+        <p class="cs-lead">
+          This page documents a repeatable execution model for turning design intent into working product artifacts — without an engineer handoff. The system combines structured prompt architecture, persistent AI skills, and a reusable component library to produce high-fidelity SAP Fiori demos, portfolio infrastructure, and AI system interfaces at the speed of a single working session.
+        </p>
+
+        <div class="cs-meta-grid">
+          <div>
+            <span class="cs-meta-label">My Role</span>
+            <span class="cs-meta-value">Designer · Builder · AI Collaborator</span>
+          </div>
+          <div>
+            <span class="cs-meta-label">Method</span>
+            <span class="cs-meta-value">Vibe coding — design-led, AI-assisted, ship-fast</span>
+          </div>
+          <div>
+            <span class="cs-meta-label">Output Types</span>
+            <span class="cs-meta-value">SAP Fiori demos · Portfolio pages · Internal tools · AI system interfaces</span>
+          </div>
+          <div>
+            <span class="cs-meta-label">Primary Stack</span>
+            <span class="cs-meta-value">HTML · CSS · SAPUI5 · Claude Code · Custom AI Skills</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ══ TLDR ══ -->
+      <div class="cs-tldr">
+        <div class="cs-tldr-label">What This Is</div>
+        <ul>
+          <li><strong>Design intent → working artifact, same session.</strong> The system closes the gap between what can be designed and what can be shipped — without relying on an engineer handoff or a later sprint to validate decisions.</li>
+          <li><strong>Vibe coding is an execution model, not a shortcut.</strong> Producing correct code with AI requires design system literacy, structured prompt architecture, and enough technical fluency to review output against spec. The quality of the output is a direct function of the quality of the brief.</li>
+          <li><strong>Reusability is the structural goal.</strong> Each build outputs reusable CSS patterns, component classes, or AI skill files. The system compounds — the tenth build is faster than the first because the infrastructure already exists.</li>
+        </ul>
+      </div>
+
+      <!-- ══ 01 WHAT VIBE CODING MEANS HERE ══ -->
+      <section class="cs-section" id="what">
+        <span class="cs-section-index">01 / 06</span>
+        <h2 class="cs-h2">What Vibe Coding Means Here</h2>
+
+        <p class="cs-p">The core structural problem with design-to-engineer handoffs is latency: design decisions don't get tested until they're expensive to change. Vibe coding — design-led, AI-assisted prototyping — solves that by collapsing the feedback loop. The designer maintains architectural authority; the AI handles implementation. The gap between a decision and a working artifact becomes a single session.</p>
+
+        <p class="cs-p">The system works because the AI is given specifications, not visions. Exact CSS class names, token values, layout logic, interaction states — the same level of precision a good engineer expects in a design handoff. Reviewing the output is reviewing code against a spec, not looking at a screenshot and guessing.</p>
+
+        <div class="vc-steps">
+            <div class="vc-step">
+              <div class="vc-step__num">Step 01</div>
+              <div class="vc-step__title">Design Intent</div>
+              <div class="vc-step__desc">Define what the component needs to communicate, what states it has, and what tokens or design system rules it must follow.</div>
+            </div>
+            <div class="vc-step">
+              <div class="vc-step__num">Step 02</div>
+              <div class="vc-step__title">Structured Prompt</div>
+              <div class="vc-step__desc">Translate design intent into a precise build brief — layout rules, CSS class names, token references, component constraints, output format.</div>
+            </div>
+            <div class="vc-step">
+              <div class="vc-step__num">Step 03</div>
+              <div class="vc-step__title">Build + Review</div>
+              <div class="vc-step__desc">AI generates the code. I review against the design spec — catching token drift, layout breaks, missing interaction states, and semantic errors.</div>
+            </div>
+            <div class="vc-step">
+              <div class="vc-step__num">Step 04</div>
+              <div class="vc-step__title">Refine + Reuse</div>
+              <div class="vc-step__desc">Correct outputs become reusable patterns. Recurring components get extracted into CSS classes, AI skills, or prompt templates I use in the next build.</div>
+            </div>
+        </div>
+
+        <div class="cs-callout">
+          <p><strong>The key constraint:</strong> AI writes fast and confidently — including confidently wrong code. The skill is knowing what correct looks like before you prompt, so you can catch the drift immediately rather than after the build is embedded in the page.</p>
+        </div>
+      </section>
+
+      <!-- ══ 02 WHAT I'VE BUILT ══ -->
+      <section class="cs-section" id="builds">
+        <span class="cs-section-index">02 / 06</span>
+        <h2 class="cs-h2">What I've Built</h2>
+
+        <p class="cs-p">Each artifact below was produced with this system — design intent to working code in a single session. Collectively they represent a reusable execution infrastructure, not a collection of one-off prototypes.</p>
+
+        <div class="vc-builds">
+          <div class="vc-build">
+            <div class="vc-build__tag">SAP Fiori Demo</div>
+            <div class="vc-build__title">ASN Joule Demo</div>
+            <div class="vc-build__desc">Full SAP Business Network Advanced Ship Notice workflow with an embedded Joule AI assistant panel — pixel-perfect Horizon tokens, live filter bar, table interactions, and contextual AI responses.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">SAPUI5</span>
+              <span class="vc-build__chip">Horizon tokens</span>
+              <span class="vc-build__chip">Single-file HTML</span>
+              <span class="vc-build__chip">SAP-icons</span>
+            </div>
+          </div>
+          <div class="vc-build">
+            <div class="vc-build__tag">SAP Fiori Demo</div>
+            <div class="vc-build__title">Order Confirmation Joule Demo</div>
+            <div class="vc-build__desc">Buyer-side Order Confirmation workflow with a Joule assistant panel for exception handling — designed to demonstrate AI decision support in supply chain operations.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">SAPUI5</span>
+              <span class="vc-build__chip">DynamicPage</span>
+              <span class="vc-build__chip">BN filter bar</span>
+              <span class="vc-build__chip">Joule panel</span>
+            </div>
+          </div>
+          <div class="vc-build">
+            <div class="vc-build__tag">Portfolio Infrastructure</div>
+            <div class="vc-build__title">katejieyu.com</div>
+            <div class="vc-build__desc">This entire portfolio site — built from scratch with a custom design system, CSS token architecture, and case-study page template system. All coded with AI assistance.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">HTML/CSS</span>
+              <span class="vc-build__chip">CSS custom properties</span>
+              <span class="vc-build__chip">Responsive layout</span>
+            </div>
+          </div>
+          <div class="vc-build">
+            <div class="vc-build__tag">AI System Interface</div>
+            <div class="vc-build__title">SyncoPro Decision UI</div>
+            <div class="vc-build__desc">The product planning interface for SyncoPro — AI-assisted session flow, structured decision outputs, and an evolution tracking system that persists context across sessions.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">AI skill system</span>
+              <span class="vc-build__chip">Session architecture</span>
+              <span class="vc-build__chip">Claude Code</span>
+            </div>
+          </div>
+          <div class="vc-build">
+            <div class="vc-build__tag">Internal Tool</div>
+            <div class="vc-build__title">AI Demo Reference Library</div>
+            <div class="vc-build__desc">A self-hosted design token reference, icon search tool, and SAP Fiori component catalog I use to accelerate demo builds — built as a single HTML file with live search.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">SAP-icons registry</span>
+              <span class="vc-build__chip">Token JSON</span>
+              <span class="vc-build__chip">Single-file HTML</span>
+            </div>
+          </div>
+          <div class="vc-build">
+            <div class="vc-build__tag">Design System</div>
+            <div class="vc-build__title">BN Component Library</div>
+            <div class="vc-build__desc">A reusable SAP Fiori component library for Business Network demos — canonical filter bar, ShellBar, table toolbar, and KPI tile patterns — extracted from production builds and locked as reusable CSS + AI skill references.</div>
+            <div class="vc-build__stack">
+              <span class="vc-build__chip">CSS component system</span>
+              <span class="vc-build__chip">Horizon tokens</span>
+              <span class="vc-build__chip">AI skill files</span>
+              <span class="vc-build__chip">Reference HTML</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 03 THE PROMPT ARCHITECTURE ══ -->
+      <section class="cs-section" id="prompts">
+        <span class="cs-section-index">03 / 06</span>
+        <h2 class="cs-h2">The Prompt Architecture</h2>
+
+        <p class="cs-p">A prompt is a design brief. Inconsistent output is almost always a briefing problem, not a model problem. The prompt format below produces correct-on-first-pass code for Fiori components by giving the AI the same information a precise engineering spec would contain — nothing less, nothing more.</p>
+
+        <h3 class="cs-h3">The five elements of a build prompt</h3>
+
+        <div class="vc-steps">
+          <div class="vc-step">
+            <div class="vc-step__num">Element 01</div>
+            <div class="vc-step__title">Context + Constraint</div>
+            <div class="vc-step__desc">What system this component lives in, what design tokens apply, what the output format must be. The AI needs to know the rules of the world before it can build in it.</div>
+          </div>
+          <div class="vc-step">
+            <div class="vc-step__num">Element 02</div>
+            <div class="vc-step__title">Structure Spec</div>
+            <div class="vc-step__desc">Exact HTML structure — element types, class names, nesting hierarchy. Not a description of what it should look like. A blueprint of what it should be.</div>
+          </div>
+          <div class="vc-step">
+            <div class="vc-step__num">Element 03</div>
+            <div class="vc-step__title">Visual Rules</div>
+            <div class="vc-step__desc">Token values, spacing, typography, color — either referenced by name (var(--sapBrandColor)) or as explicit values where precision matters.</div>
+          </div>
+          <div class="vc-step">
+            <div class="vc-step__num">Element 04</div>
+            <div class="vc-step__title">State + Interaction</div>
+            <div class="vc-step__desc">Hover, active, selected, disabled states. What changes and how. Without this, the AI produces static HTML that breaks when a user touches it.</div>
+          </div>
+        </div>
+
+        <div class="cs-pullquote">
+          "The difference between a good vibe-coding session and a frustrating one is whether you know what you're building before you start prompting."
+        </div>
+
+        <p class="cs-p">The fifth element — which is harder to systematize — is knowing what to watch for in the output. Token drift, semantic HTML errors, missing ARIA attributes, layout logic that breaks at a non-standard viewport. These don't always show up in a visual review. You have to read the code.</p>
+      </section>
+
+      <!-- ══ 04 CUSTOM AI SKILLS ══ -->
+      <section class="cs-section" id="skills">
+        <span class="cs-section-index">04 / 06</span>
+        <h2 class="cs-h2">Custom AI Skills</h2>
+
+        <p class="cs-p">The leverage problem with AI-assisted building is that context doesn't persist across sessions. Without a memory layer, every build re-establishes the same design system rules, token conventions, and component constraints from scratch. Skills solve this — they're structured knowledge files that load as session context, so every build starts from a known baseline instead of zero.</p>
+
+        <div class="vc-skills">
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">SAP Icon Skill</div>
+            <div class="vc-skill-desc">Complete reference for all 700+ SAP-icons: codepoints, HTML entities, CDN paths, font-face declarations, and rendering patterns. Any build that needs an icon queries this skill — no manual lookup, no hardcoded unicode.</div>
+            <div class="vc-skill-example">"/sapicon search arrow" → returns all arrow icons with entities</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">Design Guide Skill</div>
+            <div class="vc-skill-desc">Full Horizon, Quartz, and Belize token tables — brand colors, button states, field styles, shell tokens, spacing scale. Queried inline during every Fiori demo build to ensure token accuracy.</div>
+            <div class="vc-skill-example">"/design-guide button" → exact token values for all button variants</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">BN Shell + Nav Skill</div>
+            <div class="vc-skill-desc">Reference implementation for the SAP Business Network ShellBar and side navigation — canonical HTML structure, exact Horizon tokens, collapse behavior, icon rendering via IconPool.</div>
+            <div class="vc-skill-example">Paste as base shell for any BN demo page — no re-prompting required</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">Filter Bar Rules</div>
+            <div class="vc-skill-desc">Locked CSS classes, field types, action button patterns, and DynamicPageHeader integration for BN filter bars — sourced from the canonical reference file and memory-persisted across sessions.</div>
+            <div class="vc-skill-example">Prevents AI from reverting to OverflowToolbar pattern on each new session</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">SyncoPro Evolution Engine</div>
+            <div class="vc-skill-desc">A meta-skill for SyncoPro product development — session memory, test orchestration, phase verdicts, and evolution tracking. Turns each Claude session into a continuous product development loop.</div>
+            <div class="vc-skill-example">Product decisions compound across sessions instead of resetting</div>
+          </div>
+        </div>
+
+        <div class="cs-callout">
+          <p><strong>Why skills matter:</strong> Without persistent context, every session starts from zero. The AI has no memory of the design system you're working in, the component rules you've locked, or the decisions you've made. Skills are the fix — they're the shared memory that makes vibe coding a system rather than a series of one-off prompts.</p>
+        </div>
+      </section>
+
+      <!-- ══ 05 HOW THIS CONNECTS TO DESIGN WORK ══ -->
+      <section class="cs-section" id="connection">
+        <span class="cs-section-index">05 / 06</span>
+        <h2 class="cs-h2">How This Connects to Design Work</h2>
+
+        <p class="cs-p">The design-to-engineer handoff is a feedback latency problem. Decisions made in Figma don't surface as real behavior until they've been handed off, specced, built, and reviewed — often weeks later, when they're expensive to change. AI-assisted building eliminates the gap. The same session that produces the design spec produces the working artifact.</p>
+
+        <p class="cs-p">The skills required are the same — design system literacy, layout logic, component state modeling — applied at a different speed and without the dependency on a separate implementation track.</p>
+
+        <div class="cs-diag-grid">
+          <div class="cs-diag-cell">
+            <div class="cs-diag-layer">Traditional</div>
+            <div class="cs-diag-title">Design → Handoff → Build</div>
+            <div class="cs-diag-desc">Design intent translated into specs, handed to an engineer, built in a later sprint. Feedback loop is slow. Decisions made in Figma don't get tested in the browser until they're expensive to change.</div>
+          </div>
+          <div class="cs-diag-cell">
+            <div class="cs-diag-layer">Vibe Coding</div>
+            <div class="cs-diag-title">Design → Prompt → Ship</div>
+            <div class="cs-diag-desc">Design intent translated directly into a working build. Designer reviews the output in a browser, not a mockup. Feedback loop is same-session. Decisions get tested immediately.</div>
+          </div>
+          <div class="cs-diag-cell">
+            <div class="cs-diag-layer">Where It Matters</div>
+            <div class="cs-diag-title">Demos, Prototypes, Infrastructure</div>
+            <div class="cs-diag-desc">Not every product needs this. But demos, portfolio work, and internal tools — where speed and fidelity both matter — are exactly where AI-assisted building outperforms traditional workflows.</div>
+          </div>
+        </div>
+
+        <p class="cs-p">The constraint: this only works when the designer understands the technical substrate well enough to prompt precisely and review accurately. Vibe coding without design system literacy produces visually plausible but structurally incorrect code. The skill is in both halves.</p>
+      </section>
+
+      <!-- ══ 06 WHAT I'VE LEARNED ══ -->
+      <section class="cs-section" id="learned">
+        <span class="cs-section-index">06 / 06</span>
+        <h2 class="cs-h2">Execution Principles</h2>
+
+        <p class="cs-p">These are the structural patterns that hold across every build — not reflections, but constraints that govern how the system is used reliably at scale.</p>
+
+        <div class="vc-skills">
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">AI is a collaborator, not a generator</div>
+            <div class="vc-skill-desc">The best builds come from a real-time dialogue — give structure, review, correct, iterate — not from one long prompt and hoping the output is right. Treat it like pair programming, not autocomplete.</div>
+            <div class="vc-skill-example">Average SAP Fiori demo: 30–50 exchanges across a session</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">Reusability requires investment upfront</div>
+            <div class="vc-skill-desc">Building the first filter bar from scratch took 3 hours. The twentieth took 15 minutes. The delta is in the CSS classes, skill files, and prompt templates built during those first builds.</div>
+            <div class="vc-skill-example">BN filter bar skill: source of truth for every subsequent demo</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">Specificity beats length</div>
+            <div class="vc-skill-desc">A 4-line prompt with exact class names and token values produces better output than a 20-line prompt describing visual intent. The AI doesn't need vision. It needs constraints.</div>
+            <div class="vc-skill-example">"Use .bn-filter-field, 223px width, flex-direction:column" vs "make it look like the SAP filter"</div>
+          </div>
+          <div class="vc-skill-row">
+            <div class="vc-skill-name">The hardest part is not the code</div>
+            <div class="vc-skill-desc">The hardest part is defining what you're building precisely enough that the AI can build it correctly. That's a design skill. The code is the easy half.</div>
+            <div class="vc-skill-example">Most rework comes from under-specified prompts, not AI capability limits</div>
+          </div>
+        </div>
+
+        <!-- Outcomes -->
+        <div class="cs-outcomes">
+          <div class="cs-outcome-cell">
+            <div class="cs-outcome-number">15+</div>
+            <div class="cs-outcome-label">SAP Fiori demos built</div>
+          </div>
+          <div class="cs-outcome-cell">
+            <div class="cs-outcome-number">700+</div>
+            <div class="cs-outcome-label">SAP icons indexed in custom skill</div>
+          </div>
+          <div class="cs-outcome-cell">
+            <div class="cs-outcome-number">5</div>
+            <div class="cs-outcome-label">Persistent AI skills built</div>
+          </div>
+          <div class="cs-outcome-cell">
+            <div class="cs-outcome-number">1</div>
+            <div class="cs-outcome-label">Full portfolio site, zero engineer handoff</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer--structured" role="contentinfo">
+    <div class="container">
+      <nav class="footer__nav" aria-label="Site navigation">
+        <div>
+          <span class="footer__col-label">Decision Architecture</span>
+          <ul class="footer__col-links">
+            <li><a href="../index.html#decision-architecture" class="footer__col-link">Overview</a></li>
+            <li><a href="../decision-architecture/product-subcontracting.html" class="footer__col-link">Product Layer</a></li>
+            <li><a href="../decision-architecture/organization-governance-architecture.html" class="footer__col-link">Organizational Layer</a></li>
+            <li><a href="../decision-architecture/ai-decision-architecture.html" class="footer__col-link">AI Layer</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Product Systems</span>
+          <ul class="footer__col-links">
+            <li><a href="../index.html#founder" class="footer__col-link">Overview</a></li>
+            <li><a href="../founder/syncopro/index.html" class="footer__col-link">SyncoPro</a></li>
+            <li><a href="../founder/mighty-coupons/index.html" class="footer__col-link">Mighty Coupons</a></li>
+            <li><a href="../founder/refermejob/index.html" class="footer__col-link">ReferMeJob</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Vibe Coding</span>
+          <ul class="footer__col-links">
+            <li><a href="../index.html#vibe-coding" class="footer__col-link">Overview</a></li>
+            <li><a href="../vibe-coding/design-code-demo.html" class="footer__col-link" aria-current="page">Design → Code → Demo</a></li>
+            <li><a href="../decision-architecture/ai-decision/ai-systems-library.html" class="footer__col-link">AI Systems Library</a></li>
+            <li><a href="../decision-architecture/ai-decision/sap-product-ai-system.html" class="footer__col-link">SAP Product AI System</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Earlier Work (Archive)</span>
+          <ul class="footer__col-links">
+            <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">View Archive</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">General</span>
+          <ul class="footer__col-links">
+            <li><a href="../index.html#about" class="footer__col-link">About</a></li>
+            <li><a href="mailto:katejieyu@gmail.com" class="footer__col-link">Contact</a></li>
+            <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">Archive</a></li>
+            <li><a href="../sitemap.html" class="footer__col-link">Sitemap</a></li>
+            <li><a href="../kateyu-resume.html" class="footer__col-link">Resume</a></li>
+          </ul>
+        </div>
+      </nav>
+    <div class="footer__bottom">
+      <p class="footer__bottom-copy"> &copy; 2016 &ndash; <script>document.write((new Date()).getFullYear())</script> Kate Jie Yu &middot; AI Product Systems Designer · Founder · Decision Infrastructure </p>
+      <div class="footer__bottom-links"> <a href="https://katejieyudesign.com/kate-studio/" class="footer__bottom-link" target="_blank" rel="noopener noreferrer">Archive</a> <a href="../sitemap.html" class="footer__bottom-link">Sitemap</a> <a href="../kateyu-resume.html" class="footer__bottom-link">Resume</a> </div>
+    </div>
+    </div>
+  </footer>
+
+  <script src="../js/staff-portfolio.js"></script>
+</body>
+</html>

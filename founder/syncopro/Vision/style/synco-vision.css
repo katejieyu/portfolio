@@ -740,3 +740,172 @@ html, body {
   transition: color 0.15s;
 }
 .gate-toggle:hover { color: var(--text); }
+
+/* ── Global card patterns (slides 02–10) ────────────────────────────── */
+
+/* Left-border insight card (2-col grid items, purple or blue accent) */
+.cv-insight-card {
+  padding: 24px;
+  border-radius: 10px;
+  background-color: var(--surface);
+  transition: box-shadow 0.2s;
+}
+.cv-insight-card--purple { border-left: 3px solid var(--purple); }
+.cv-insight-card--blue   { border-left: 3px solid var(--blue); }
+
+/* Icon square inside insight cards */
+.cv-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cv-card-icon--purple {
+  background-color: color-mix(in srgb, var(--purple) 10%, transparent);
+  color: var(--purple);
+}
+.cv-card-icon--blue {
+  background-color: color-mix(in srgb, var(--blue) 10%, transparent);
+  color: var(--blue);
+}
+.cv-card-icon--muted {
+  background-color: color-mix(in srgb, var(--muted) 10%, transparent);
+  color: var(--muted);
+}
+
+/* Landscape tool row (slide 04, single-border left) */
+.cv-tool-row {
+  padding: 24px;
+  border-radius: 10px;
+  background-color: var(--surface);
+  border-left: 1px solid var(--border);
+  transition: box-shadow 0.2s;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Footnote / italic note box */
+.cv-footnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 28px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--surface2);
+  opacity: 0.85;
+}
+
+/* Pill / eyebrow badge */
+.cv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 20px;
+}
+.cv-pill--purple {
+  color: var(--purple);
+  background-color: color-mix(in srgb, var(--purple) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--purple) 20%, transparent);
+}
+.cv-pill--blue {
+  color: var(--blue);
+  background-color: color-mix(in srgb, var(--blue) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+/* Active flow node card (Align / Approve) */
+.cv-flow-card {
+  flex: 1 1 0%;
+  padding: 16px 14px;
+  border-radius: 10px;
+  border: 1.5px solid color-mix(in srgb, var(--blue) 35%, transparent);
+  background-color: color-mix(in srgb, var(--blue) 4%, var(--surface));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  position: relative;
+}
+
+/* Deferred flow node card (Execute / Monitor / Iterate) */
+.cv-flow-card--deferred {
+  flex: 1 1 0%;
+  padding: 16px 14px;
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+  background-color: var(--surface);
+  opacity: 0.55;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  position: relative;
+}
+
+/* Icon circle inside flow cards */
+.cv-flow-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cv-flow-icon--active {
+  background-color: color-mix(in srgb, var(--blue) 12%, transparent);
+  color: var(--blue);
+}
+.cv-flow-icon--deferred {
+  background-color: color-mix(in srgb, var(--muted) 8%, transparent);
+  color: var(--muted);
+}
+
+/* "Next Layer" badge inside deferred cards */
+.cv-next-layer-badge {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* Active Core feature cards (3-col grid items) */
+.cv-feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* Info / status note box */
+.cv-status-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 560px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--blue) 5%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--blue) 12%, transparent);
+}

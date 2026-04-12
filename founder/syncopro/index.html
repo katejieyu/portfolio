@@ -686,8 +686,10 @@ body {
 }
 .footer__nav {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4xl);
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: var(--space-2xl);
+    row-gap: var(--space-3xl);
+    
     padding-bottom: var(--space-4xl);
     border-bottom: 1px solid var(--color-border-light);
     margin-bottom: var(--space-3xl)
@@ -721,10 +723,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    
     gap: var(--space-md);
 }
-.footer__bottom-copy {
+.footer__bottom-copy { white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
 }
@@ -743,6 +745,12 @@ body {
 }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+.footer__nav {
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+
 @media (max-width: 900px) {
 .cs-gov-grid {
     grid-template-columns: 1fr;
@@ -753,15 +761,14 @@ body {
 .cs-evidence {
     grid-template-columns: repeat(2, 1fr);
 }
-.footer__nav {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3xl);
-}
 }
 
 @media (max-width: 768px) {
 .cs-h1 {
     font-size: 1.75rem;
+}
+.footer__nav {
+    grid-template-columns: repeat(2, 1fr);
 }
 .cs-diag-grid {
     grid-template-columns: 1fr;
@@ -828,6 +835,167 @@ body {
     transition-duration: 0.01ms !important;
   }
 } 
+/* ── BEFORE VS AFTER ── */
+.bva {
+  margin: 48px 0;
+}
+.bva__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7c3aed;
+  margin-bottom: 20px;
+}
+.bva__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+.bva__col {
+  border-radius: 10px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bva__col--before {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+.bva__col--after {
+  background: rgba(124,58,237,0.04);
+  border: 1px solid rgba(124,58,237,0.18);
+}
+.bva__col-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 20px;
+}
+.bva__col--before .bva__col-title { color: #9ca3af; }
+.bva__col--after .bva__col-title  { color: #7c3aed; }
+.bva__row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 0;
+  border-bottom: 1px solid transparent;
+}
+.bva__col--before .bva__row { border-bottom-color: #f3f4f6; }
+.bva__col--after  .bva__row { border-bottom-color: rgba(124,58,237,0.08); }
+.bva__row:last-child { border-bottom: none; padding-bottom: 0; }
+.bva__row-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.bva__col--before .bva__row-label { color: #9ca3af; }
+.bva__col--after  .bva__row-label { color: #7c3aed; }
+.bva__row-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.bva__col--before .bva__row-text { color: #6b7280; }
+.bva__col--after  .bva__row-text { color: #111827; font-weight: 500; }
+.bva__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+.bva__divider-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.bva__divider-line {
+  width: 1px;
+  flex: 1;
+  background: #e5e7eb;
+}
+.bva__divider-arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #7c3aed;
+  flex-shrink: 0;
+}
+.bva__takeaway {
+  font-size: 0.9375rem;
+  color: #374151;
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+}
+@media (max-width: 640px) {
+  .bva__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .bva__divider { display: none; }
+}
+/* ── BVA MICRO-INTERACTIONS ── */
+.bva__row {
+  transition: background 180ms ease, transform 180ms ease;
+  border-radius: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.bva__col--before .bva__row:hover {
+  background: rgba(0,0,0,0.03);
+  transform: translateY(-2px);
+}
+.bva__col--after .bva__row:hover {
+  background: rgba(124,58,237,0.07);
+  transform: translateY(-2px);
+}
+.bva__col {
+  transition: opacity 180ms ease;
+}
+.bva__grid:hover .bva__col {
+  opacity: 0.65;
+}
+.bva__grid:hover .bva__col:hover {
+  opacity: 1;
+}
+.bva__divider-arrow {
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.bva__grid:hover .bva__divider-arrow {
+  transform: scale(1.1);
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+/* scroll fade-in */
+.bva {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.bva.bva--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bva__row, .bva__col, .bva__divider-arrow, .bva {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
 </style>
 </head>
 
@@ -838,10 +1006,9 @@ body {
 <header class="header" role="banner">
   <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav__container"> <a href="../../index.html" class="nav__logo"> <img src="../../img/KJY_logo_bar.jpg" alt="Kate Jie Yu" width="48" height="48"> <!--<span class="nav__logo-text">Kate Jie Yu</span>--> </a>
-      <ul class="nav__menu" id="nav-menu">
-        <li><a href="../../index.html#decision-architecture" class="nav__link">Decision Architecture</a></li>
-        <li><a href="../../index.html#founder" class="nav__link">Founder</a></li>
-        <li><a href="../../index.html#applied-systems" class="nav__link">Applied Systems</a></li>
+            <ul class="nav__menu" id="nav-menu">
+        <li><a href="../../index.html" class="nav__link">Systems</a></li>
+        <li><a href="../../index.html#vibe-coding" class="nav__link">Vibe Coding</a></li>
         <li><a href="../../index.html#about" class="nav__link">About</a></li>
         <li><a href="../../kateyu-resume.html" class="nav__link nav__link--cta">Resume</a></li>
       </ul>
@@ -870,37 +1037,102 @@ body {
       <h1 class="cs-h1"> SyncoPro — Designing a <br>
         <span>Decision Infrastructure Platform</span><br>
         from Zero to One </h1>
-      <p class="cs-lead"> Enterprise planning tools have a structural problem: they model execution state, not decision readiness. SyncoPro is my attempt to design the layer that was missing — a system that operationalizes how product decisions get made, scoped, governed, and handed off to AI without losing human authority. </p>
-      <div class="cs-meta-grid">
-        <div> <span class="cs-meta-label">My Role</span> <span class="cs-meta-value">Founder · Decision Architecture Designer · Product Strategist</span> </div>
-        <div> <span class="cs-meta-label">Stage</span> <span class="cs-meta-value">Beta v3 live · v6 architecture in progress · Seed-stage</span> </div>
-        <div> <span class="cs-meta-label">Platform Type</span> <span class="cs-meta-value">AI-powered Execution Alignment System</span> </div>
-        <div> <span class="cs-meta-label">Primary Audience</span> <span class="cs-meta-value">Product Managers · Product Leaders · Founders with product responsibility</span> </div>
-      </div>
+      <p class="cs-lead">I built SyncoPro, an AI-powered system that helps founders and product teams turn early-stage ideas into structured product plans — making it easier to define problems, align decisions, and move toward execution.</p>
+      <p class="cs-p">This started from a repeated pattern I saw at SAP — teams had tools for execution, but no system for decision-making.</p>
+      <p class="cs-p"><strong>SyncoPro is designed to make product decisions clearer, more structured, and easier to execute.</strong></p>
     </header>
-    
-    <!-- EXECUTIVE SUMMARY -->
+
+    <!-- CURRENT STATE -->
     <div class="cs-tldr">
-      <div class="cs-tldr-label">Executive Summary</div>
+      <div class="cs-tldr-label">Current State</div>
       <ul>
-        <li>Enterprise teams have lost the structural layer between planning intent and execution readiness — tools track status but cannot model decision quality or governance boundaries.</li>
-        <li>SyncoPro was architected as a five-layer decision infrastructure platform: intent modeling, readiness scoring, governance boundary logic, AI assistance, and forecast calibration.</li>
-        <li>MVP was defined as a minimum viable system slice — not a minimum feature set — operationalized in Beta v3 and evolving toward a full governance and AI boundary model in v6.</li>
+        <li>Most planning tools track execution status — they don't help teams decide what to build or whether a decision is ready to move forward.</li>
+        <li>SyncoPro is built as a five-layer system: idea intake, structured planning, decision scoring, AI assistance, and feedback loops.</li>
+        <li>Currently running a full-access beta — startup founders are actively testing it, with analytics capturing real usage and decision workflows.</li>
+        <li>Early responses show strong resonance, especially for teams navigating early-stage product complexity.</li>
       </ul>
+    </div>
+
+    <!-- BEFORE VS AFTER -->
+    <div class="bva">
+      <div class="bva__label">Before vs After — What Changes</div>
+      <div class="bva__grid">
+
+        <!-- LEFT: Without -->
+        <div class="bva__col bva__col--before">
+          <div class="bva__col-title">Without SyncoPro</div>
+          <div class="bva__row">
+            <div class="bva__row-label">Decision State</div>
+            <div class="bva__row-text">Decisions live inside documents and meetings</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">Readiness</div>
+            <div class="bva__row-text">No clear signal — based on intuition</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">Scope</div>
+            <div class="bva__row-text">Changes during execution</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">AI Usage</div>
+            <div class="bva__row-text">Used inconsistently, without boundaries</div>
+          </div>
+        </div>
+
+        <!-- DIVIDER -->
+        <div class="bva__divider">
+          <div class="bva__divider-inner">
+            <div class="bva__divider-line"></div>
+            <div class="bva__divider-arrow">→</div>
+            <div class="bva__divider-line"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: With -->
+        <div class="bva__col bva__col--after">
+          <div class="bva__col-title">With SyncoPro</div>
+          <div class="bva__row">
+            <div class="bva__row-label">Decision State</div>
+            <div class="bva__row-text">Structured as explicit decision objects</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">Readiness</div>
+            <div class="bva__row-text">Scored and visible before execution</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">Scope</div>
+            <div class="bva__row-text">Defined early and preserved</div>
+          </div>
+          <div class="bva__row">
+            <div class="bva__row-label">AI Usage</div>
+            <div class="bva__row-text">Constrained within governance boundaries</div>
+          </div>
+        </div>
+
+      </div>
+      <p class="bva__takeaway">This is the shift from managing work → to structuring decisions.</p>
+    </div>
+
+    <div class="cs-meta-grid">
+      <div> <span class="cs-meta-label">My Role</span> <span class="cs-meta-value">Founder · Decision Architecture Designer · Product Strategist</span> </div>
+      <div> <span class="cs-meta-label">Stage</span> <span class="cs-meta-value">Pre-launch beta live · Early founder interest</span> </div>
+      <div> <span class="cs-meta-label">Platform Type</span> <span class="cs-meta-value">AI-powered Execution Alignment System</span> </div>
+      <div> <span class="cs-meta-label">Primary Audience</span> <span class="cs-meta-value">Product Managers · Product Leaders · Founders with product responsibility</span> </div>
     </div>
     
     <!-- EVIDENCE ACCESS BAR -->
+    <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--space-md);">Explore the live system, try the current beta, and review early-stage direction:</p>
     <div class="cs-access-bar"> <span class="cs-access-label">Access</span> <a href="https://syncopro.com" target="_blank" rel="noopener noreferrer" class="cs-access-btn">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="8" cy="8" r="6"/>
         <path d="M8 2a9 9 0 0 1 0 12M8 2a9 9 0 0 0 0 12M2 8h12"/>
       </svg>
-      Visit SyncoPro </a> <a href="https://syncopro.com/beta/index.html" class="cs-access-btn" target="_blank">
+      Visit SyncoPro </a> <a href="https://syncopro.vercel.app/" class="cs-access-btn" target="_blank">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="12" height="12" rx="2"/>
         <path d="M5 8h6M8 5v6"/>
       </svg>
-      View Product Beta v3 </a> <a href="Pitch-deck/index.html" class="cs-access-btn" target="_blank" rel="noopener noreferrer">
+      View Live Beta </a> <a href="Pitch-deck/index.html" class="cs-access-btn" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 2h6l4 4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
         <polyline points="10 2 10 6 14 6"/>
@@ -911,7 +1143,17 @@ body {
         <polyline points="10 2 10 6 14 6"/>
       </svg>
       View Product Vision </a> </div>
-    
+
+    <!-- GO DEEPER -->
+    <div style="margin:0 0 48px;padding:20px 24px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+      <span style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;display:block;margin-bottom:12px;">Go Deeper</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <a href="founder-lens/index.html" style="font-size:0.8125rem;color:#374151;text-decoration:none;padding:6px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;transition:border-color 150ms,color 150ms;" onmouseover="this.style.borderColor='#7c3aed';this.style.color='#7c3aed'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#374151'">Read the Founder Lens →</a>
+        <a href="Vision/index.html" style="font-size:0.8125rem;color:#374151;text-decoration:none;padding:6px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;transition:border-color 150ms,color 150ms;" onmouseover="this.style.borderColor='#7c3aed';this.style.color='#7c3aed'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#374151'">View Product Vision →</a>
+        <a href="Pitch-deck/index.html" style="font-size:0.8125rem;color:#374151;text-decoration:none;padding:6px 14px;border:1px solid #d1d5db;border-radius:6px;background:#fff;transition:border-color 150ms,color 150ms;" onmouseover="this.style.borderColor='#7c3aed';this.style.color='#7c3aed'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#374151'">View Pitch Deck →</a>
+      </div>
+    </div>
+
     <!-- SECTION 01 — FOUNDER FRAMING (REPLACEMENT) -->
     <section class="cs-section" id="framing"> <span class="cs-section-index">01 / 07</span>
       <h2 class="cs-h2">A Theory of Decision Infrastructure</h2>
@@ -970,12 +1212,12 @@ body {
         <section class="cs-sync__col cs-sync__col--core">
           <div class="cs-sync__col-head">
             <div class="cs-sync__col-eyebrow cs-sync__col-eyebrow--core">Core Engine</div>
-            <span class="cs-badge cs-badge--purple cs-sync__badge">MVP (Now)</span>
+            <span class="cs-badge cs-badge--purple cs-sync__badge">Current Core</span>
           </div>
 
           <h4 class="cs-sync__title cs-sync__title--core">Decision Readiness Engine</h4>
           <p class="cs-sync__desc">
-            SyncoPro’s MVP is not “a PRD tool.” It’s a minimum viable <strong>system slice</strong> that evaluates readiness, routes governance, and constrains AI within authority boundaries.
+            SyncoPro’s current core is not “a PRD tool.” It’s a minimum viable <strong>system slice</strong> that evaluates readiness, routes governance, and constrains AI within authority boundaries.
           </p>
 
           <div class="cs-sync__mini-grid">
@@ -1235,7 +1477,7 @@ body {
           </div>
           <!-- Layer 2 -->
           <div class="adl adl--engine">
-            <div class="adl__label"> <span class="adl__num">2</span> <span class="adl__text">Decision Readiness Engine</span> <span class="adl__badge adl__badge--mvp">Current MVP</span> </div>
+            <div class="adl__label"> <span class="adl__num">2</span> <span class="adl__text">Decision Readiness Engine</span> <span class="adl__badge adl__badge--mvp">Current System</span> </div>
             <div class="adl__box">
               <div class="adl__grid">
                 <div class="adl__card adl__card--engine"> <span class="adl__icon adl__icon--engine">INT</span> <strong>Intent Modeling</strong>
@@ -1273,7 +1515,7 @@ body {
           </div>
           <!-- Layer 3 -->
           <div class="adl adl--future">
-            <div class="adl__label"> <span class="adl__num">3</span> <span class="adl__text">Learning &amp; Optimization</span> <span class="adl__badge adl__badge--future">Future System</span> </div>
+            <div class="adl__label"> <span class="adl__num">3</span> <span class="adl__text">Learning &amp; Optimization</span> <span class="adl__badge adl__badge--future">Next Layer</span> </div>
             <div class="adl__box">
               <div class="adl__grid">
                 <div class="adl__card adl__card--future"> <span class="adl__icon adl__icon--future">MON</span> <strong>Execution Monitoring</strong>
@@ -1319,11 +1561,11 @@ body {
         <p>"A platform is not built by adding features. It is built by validating one architectural layer at a time, in the order the architecture demands."</p>
       </div>
       <div class="cs-h3">Phase I — Visibility</div>
-      <p class="cs-p"><strong>Beta v1–v2.</strong> Structured writing operationalized intent modeling as the architecture's first layer — the foundation all readiness scoring depends on. Constraint discovered: readiness signals without governance context produce information users cannot act on. A score without routing logic is a metric, not a system.</p>
-      <div class="cs-h3">Phase II — Modeling</div>
-      <p class="cs-p"><strong>Beta v3.</strong> Extended the system through Layer 3 — governance routing, authority verification, and AI assistance constrained within governance-defined scope. AI was introduced only after the governance layer was functional: an architectural requirement, not a delay. Constraint discovered: governance boundary logic requires organizational role context that individual users cannot self-configure. Enterprise deployment requires admin-layer authority mapping.</p>
-      <div class="cs-h3">Phase III — Governance</div>
-      <p class="cs-p"><strong>v6.</strong> Full five-layer architecture. Configurable governance boundary modeling, multi-stakeholder authority configurations, and the feedback loop that closes the system. The focus is boundary precision — the line between AI authority and human authority must be configurable across organizational structures, verifiable in the system record, and stable under edge cases Beta v3 could not anticipate.</p>
+      <p class="cs-p">The earliest system layer operationalized structured writing as intent modeling — the foundation all readiness scoring depends on. Making decision logic visible was the first architectural requirement. Constraint discovered: readiness signals without governance context produce information users cannot act on. A score without routing logic is a metric, not a system.</p>
+      <div class="cs-h3">Phase II — Operational Model</div>
+      <p class="cs-p">The current pre-launch beta extends the system through governance routing, authority verification, and AI assistance constrained within governance-defined scope. AI was introduced only after the governance layer was functional: an architectural requirement, not a delay. Constraint discovered: governance boundary logic requires organizational role context that individual users cannot self-configure. Enterprise deployment requires admin-layer authority mapping.</p>
+      <div class="cs-h3">Phase III — Expanded Governance</div>
+      <p class="cs-p">The next architectural layer completes the five-layer model: configurable governance boundary modeling, multi-stakeholder authority configurations, and the feedback loop that closes the system. The focus is boundary precision — configurable across organizational structures, verifiable in the system record, and stable under edge cases the current beta continues to surface.</p>
       <div class="cs-table-scroll">
         <table class="cs-table">
           <thead>
@@ -1338,23 +1580,23 @@ body {
           <tbody>
             <tr>
               <td data-label="Phase">Phase I — Visibility<br>
-                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">Beta v1–v2</span></td>
+                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">Early system layer</span></td>
               <td data-label="Question">Can decision intent be structurally modeled through writing?</td>
               <td data-label="Layers">Layers 1–2. Intent capture and readiness signal without governance routing.</td>
               <td data-label="Constraint">Readiness without governance produces signals users cannot act on. Score without routing is a metric, not a system.</td>
               <td data-label="Status"><span class="cs-badge cs-badge--shared">Complete</span></td>
             </tr>
             <tr>
-              <td data-label="Phase">Phase II — Modeling<br>
-                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">Beta v3 · Live</span></td>
+              <td data-label="Phase">Phase II — Operational Model<br>
+                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">Current pre-launch beta</span></td>
               <td data-label="Question">Can governance boundary logic be operationalized at the decision layer?</td>
               <td data-label="Layers">Layers 1–3 with AI assistance scoped within governance-defined boundaries.</td>
               <td data-label="Constraint">Governance requires organizational role context individual users cannot self-configure. Enterprise authority mapping requires an admin layer.</td>
               <td data-label="Status"><span class="cs-badge cs-badge--execution">Live</span></td>
             </tr>
             <tr>
-              <td data-label="Phase">Phase III — Governance<br>
-                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">v6 · In Progress</span></td>
+              <td data-label="Phase">Phase III — Expanded Governance<br>
+                <span style="font-weight:400;color:#9ca3af;font-size:0.75rem;">Next architectural layer</span></td>
               <td data-label="Question">Can authority boundaries be configurable, verifiable, and stable across org contexts?</td>
               <td data-label="Layers">All five layers. Configurable governance boundary modeling, feedback loop, trust calibration infrastructure.</td>
               <td data-label="Constraint">Trust calibration requires persistent decision outcome data — a backend investment deliberately deferred until governance boundary is proven stable.</td>
@@ -1439,14 +1681,14 @@ body {
           <div class="cs-evidence-desc">Defines the minimum viable system slice — not a minimum feature set. Demonstrates the ability to identify which vertical through the architecture is structurally coherent end-to-end and deployable without compromising governance integrity.</div>
         </div>
         <div class="cs-evidence-cell">
-          <div class="cs-evidence-label">Deployed Phase II System</div>
-          <div class="cs-evidence-title">Beta v3 — Live</div>
+          <div class="cs-evidence-label">Deployed System</div>
+          <div class="cs-evidence-title">Pre-launch Beta — Live</div>
           <div class="cs-evidence-desc">Operationalizes readiness logic under real constraints. Layers 1–3 in production with AI assistance constrained within governance-defined scope — demonstrates that the architectural model is implementable and structurally coherent as shipped.</div>
         </div>
         <div class="cs-evidence-cell">
-          <div class="cs-evidence-label">Phase III in Design</div>
-          <div class="cs-evidence-title">v6 Architecture</div>
-          <div class="cs-evidence-desc">Strengthens governance visibility and boundary enforcement. Configurable multi-stakeholder authority configurations, feedback loop infrastructure. The design process is itself evidence: Phase III was not scoped until Phase II produced the constraints that define it.</div>
+          <div class="cs-evidence-label">Expanded Governance in Design</div>
+          <div class="cs-evidence-title">Next Architectural Layer</div>
+          <div class="cs-evidence-desc">Strengthens governance visibility and boundary enforcement. Configurable multi-stakeholder authority configurations, feedback loop infrastructure. The design process is itself evidence: the next layer was not scoped until the current beta produced the constraints that define it.</div>
         </div>
       </div>
       <div class="cs-callout">
@@ -1461,47 +1703,75 @@ body {
 <footer class="footer--structured" role="contentinfo">
   <div class="container">
     <nav class="footer__nav" aria-label="Site navigation">
-      <div> <span class="footer__col-label">Decision Architecture</span>
-        <ul class="footer__col-links">
-          <li><a href="../../index.html#decision-architecture" class="footer__col-link">Overview</a></li>
-          <li><a href="../../decision-architecture/product-subcontracting.html" class="footer__col-link">Product Layer</a></li>
-          <li><a href="../../decision-architecture/organization-governance-architecture.html" class="footer__col-link">Organizational Layer</a></li>
-          <li><a href="../../decision-architecture/ai-decision-architecture.html" class="footer__col-link">AI Layer</a></li>
-        </ul>
-      </div>
-      <div> <span class="footer__col-label">Founder</span>
-        <ul class="footer__col-links">
-          <li><a href="../../index.html#founder" class="footer__col-link">Overview</a></li>
-          <li><a href="#" class="footer__col-link">SyncoPro</a></li>
-          <li><a href="../mighty-coupons/index.html" class="footer__col-link">Mighty Coupons</a></li>
-          <li><a href="../refermejob/index.html" class="footer__col-link">ReferMeJob</a></li>
-        </ul>
-      </div>
-      <div> <span class="footer__col-label">Applied Systems</span>
-        <ul class="footer__col-links">
-          <li><a href="../../index.html#applied-systems" class="footer__col-link">Overview</a></li>
-          <li><a href="../../applied-systems/ux-ui-design/sap/sap-discovery-2.1.html" class="footer__col-link">Discovery 2.1</a></li>
-          <li><a href="../../applied-systems/case-studies/sap/sap-bn-design-system.html" class="footer__col-link">Design System</a></li>
-          <li><a href="../../applied-systems/case-studies/sap/sap-discovery-analytics-2024.html" class="footer__col-link">Analytics Work</a></li>
-          <li><a href="../../applied-systems/case-studies/sap/sap-bsc-ai-autopilot-for-multi-tier-buy-sell-supply-chains-2025.html" class="footer__col-link">AI Autopilot</a></li>
-        </ul>
-      </div>
-      <div> <span class="footer__col-label">General</span>
-        <ul class="footer__col-links">
-          <li><a href="../../index.html#about" class="footer__col-link">About</a></li>
-          <li><a href="mailto:katejieyu@gmail.com" class="footer__col-link">Contact</a></li>
-          <li><a href="../../applied-systems/index.html" class="footer__col-link" target="_blank">Archive</a></li>
-          <li><a href="../../sitemap.html" class="footer__col-link">Sitemap</a></li>
-          <li><a href="../../kateyu-resume.html" class="footer__col-link">Resume</a></li>
-        </ul>
-      </div>
-    </nav>
+        <div>
+          <span class="footer__col-label">Decision Architecture</span>
+          <ul class="footer__col-links">
+            <li><a href="../../index.html#decision-architecture" class="footer__col-link">Overview</a></li>
+            <li><a href="../../decision-architecture/product-subcontracting.html" class="footer__col-link">Product Layer</a></li>
+            <li><a href="../../decision-architecture/organization-governance-architecture.html" class="footer__col-link">Organizational Layer</a></li>
+            <li><a href="../../decision-architecture/ai-decision-architecture.html" class="footer__col-link">AI Layer</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Product Systems</span>
+          <ul class="footer__col-links">
+            <li><a href="../../index.html#founder" class="footer__col-link">Overview</a></li>
+            <li><a href="../../founder/syncopro/index.html" class="footer__col-link" aria-current="page">SyncoPro</a></li>
+            <li><a href="../../founder/syncopro/founder-lens/index.html" class="footer__col-link">SyncoPro Founder Lens</a></li>
+            <li><a href="../../founder/syncopro/Vision/index.html" class="footer__col-link">SyncoPro Vision</a></li>
+            <li><a href="../../founder/syncopro/Pitch-deck/index.html" class="footer__col-link">SyncoPro Deck</a></li>
+            <li><a href="../../founder/mighty-coupons/index.html" class="footer__col-link">Mighty Coupons</a></li>
+            <li><a href="../../founder/refermejob/index.html" class="footer__col-link">ReferMeJob</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Vibe Coding</span>
+          <ul class="footer__col-links">
+            <li><a href="../../index.html#vibe-coding" class="footer__col-link">Overview</a></li>
+            <li><a href="../../vibe-coding/design-code-demo.html" class="footer__col-link">Design → Code → Demo</a></li>
+            <li><a href="../../decision-architecture/ai-decision/ai-systems-library.html" class="footer__col-link">AI Systems Library</a></li>
+            <li><a href="../../decision-architecture/ai-decision/sap-product-ai-system.html" class="footer__col-link">SAP Product AI System</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">Earlier Work (Archive)</span>
+          <ul class="footer__col-links">
+            <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">View Archive</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer__col-label">General</span>
+          <ul class="footer__col-links">
+            <li><a href="../../index.html#about" class="footer__col-link">About</a></li>
+            <li><a href="mailto:katejieyu@gmail.com" class="footer__col-link">Contact</a></li>
+            <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">Archive</a></li>
+            <li><a href="../../sitemap.html" class="footer__col-link">Sitemap</a></li>
+            <li><a href="../../kateyu-resume.html" class="footer__col-link">Resume</a></li>
+          </ul>
+        </div>
+      </nav>
     <div class="footer__bottom">
-      <p class="footer__bottom-copy"> &copy; 2016 &ndash; <script>document.write((new Date()).getFullYear())</script> Kate Jie Yu &middot; Staff Product Designer · AI Systems &amp; Decision Architecture </p>
-      <div class="footer__bottom-links"> <a href="../../applied-systems/index.html" class="footer__bottom-link" target="_blank">Archive</a> <a href="../../sitemap.html" class="footer__bottom-link">Sitemap</a> <a href="../../kateyu-resume.html" class="footer__bottom-link">Resume</a> </div>
+      <p class="footer__bottom-copy"> &copy; 2016 &ndash; <script>document.write((new Date()).getFullYear())</script> Kate Jie Yu &middot; AI Product Systems Designer · Founder · Decision Infrastructure </p>
+      <div class="footer__bottom-links"> <a href="https://katejieyudesign.com/kate-studio/" class="footer__bottom-link" target="_blank" rel="noopener noreferrer">Archive</a> <a href="../../sitemap.html" class="footer__bottom-link">Sitemap</a> <a href="../../kateyu-resume.html" class="footer__bottom-link">Resume</a> </div>
     </div>
   </div>
 </footer>
 <script src="../../js/staff-portfolio.js"></script>
+<script>
+(function(){
+  var el = document.querySelector('.bva');
+  if (!el) return;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries, obs){
+      if (entries[0].isIntersecting) {
+        el.classList.add('bva--visible');
+        obs.disconnect();
+      }
+    }, { threshold: 0.15 }).observe(el);
+  } else {
+    el.classList.add('bva--visible');
+  }
+})();
+</script>
 </body>
 </html>

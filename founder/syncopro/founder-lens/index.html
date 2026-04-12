@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<title>Founder Lens — Designing Decision Infrastructure · Kate Jie Yu</title>
+<meta name="description" content="How I think about decision systems, AI governance, and product design at a structural level. Not a product page — a thinking frame.">
+<link rel="shortcut icon" type="image/x-icon" href="../../../img/KJY_logo_bar.jpg">
+<link rel="apple-touch-icon" href="../../../img/KJY_logo_bar.jpg">
+<link rel="stylesheet" href="../../../style/theme.css">
+<link rel="stylesheet" href="../../../style/base.css">
+<link rel="stylesheet" href="../../../style/components.css">
+<style>
+body {
+  padding-top: 80px;
+}
+
+/* ── BACK LINK ── */
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  padding: 24px 0 0;
+  transition: color 150ms ease-out;
+}
+.cs-back:hover { color: #7c3aed; }
+.cs-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ── PAGE HEADER ── */
+.cs-header {
+  padding: 48px 0 56px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.cs-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.cs-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background-color: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+.cs-pill--grey { background-color: #f3f4f6; color: #6b7280; }
+.cs-pill--blue { background-color: rgba(37, 99, 235, 0.08); color: #2563eb; }
+.cs-h1 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111827;
+  margin-bottom: 16px;
+}
+.cs-h1 span { color: #7c3aed; }
+.cs-lead {
+  font-size: 1.125rem;
+  color: #6b7280;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+/* ── SECTIONS ── */
+.cs-section {
+  padding: 64px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.cs-section:last-of-type { border-bottom: none; }
+.cs-section-index {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #d1d5db;
+  margin-bottom: 12px;
+}
+.cs-h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+.cs-h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 32px 0 8px;
+}
+.cs-h3:first-of-type { margin-top: 0; }
+.cs-p {
+  font-size: 0.9375rem;
+  color: #374151;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.cs-p:last-child { margin-bottom: 0; }
+
+/* ── BELIEF GRID ── */
+.cs-belief-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 8px;
+}
+.cs-belief {
+  padding-left: 20px;
+  border-left: 3px solid #e5e7eb;
+  transition: border-color 150ms ease-out;
+}
+.cs-belief:hover { border-left-color: #7c3aed; }
+.cs-belief-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.cs-belief-body {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.7;
+}
+
+/* ── DESIGN APPROACH ── */
+.cs-approach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: #e5e7eb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.cs-approach-cell {
+  background: #fff;
+  padding: 28px 24px;
+}
+.cs-approach-kicker {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #7c3aed;
+  margin-bottom: 8px;
+}
+.cs-approach-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.cs-approach-desc {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  line-height: 1.65;
+}
+
+/* ── WHAT I DON'T BELIEVE ── */
+.cs-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+.cs-counter-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.cs-counter-mark {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 24px;
+}
+.cs-counter-text {
+  font-size: 0.9375rem;
+  color: #374151;
+  line-height: 1.6;
+}
+.cs-counter-text strong {
+  color: #111827;
+}
+
+/* ── PULLQUOTE ── */
+.cs-pullquote {
+  border-left: 3px solid #7c3aed;
+  padding: 16px 24px;
+  margin: 40px 0;
+  background: rgba(124, 58, 237, 0.03);
+  border-radius: 0 8px 8px 0;
+}
+.cs-pullquote p {
+  font-size: 1rem;
+  font-style: italic;
+  color: #374151;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── CLOSING ── */
+.cs-closing {
+  padding: 64px 0 80px;
+}
+.cs-closing-p {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  max-width: 680px;
+}
+.cs-closing-p:last-child { margin-bottom: 0; }
+
+/* ── FOOTER ── */
+.footer--structured {
+  padding: var(--space-5xl) 0 var(--space-3xl);
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-background);
+}
+.footer__nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-3xl);
+  padding-bottom: var(--space-4xl);
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--space-3xl);
+}
+.footer__col-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+.footer__col-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.footer__col-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  line-height: var(--line-height-normal);
+  transition: color var(--transition-fast);
+}
+.footer__col-link:hover { color: var(--color-text); }
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+.footer__bottom-copy {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.footer__bottom-links { display: flex; gap: var(--space-lg); }
+.footer__bottom-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.footer__bottom-link:hover { color: var(--color-text-secondary); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .cs-approach-grid { grid-template-columns: 1fr; }
+  .footer__nav { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .cs-h1 { font-size: 1.75rem; }
+  .footer__nav { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .footer__nav { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .footer__bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="header" role="banner">
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__container">
+      <a href="../../../index.html" class="nav__logo">
+        <img src="../../../img/KJY_logo_bar.jpg" alt="Kate Jie Yu" width="48" height="48">
+      </a>
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="../../../index.html" class="nav__link">Systems</a></li>
+        <li><a href="../../../index.html#vibe-coding" class="nav__link">Vibe Coding</a></li>
+        <li><a href="../../../index.html#about" class="nav__link">About</a></li>
+        <li><a href="../../../kateyu-resume.html" class="nav__link nav__link--cta">Resume</a></li>
+      </ul>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main" role="main">
+  <div class="container">
+
+    <!-- BACK LINK -->
+    <a href="../index.html" class="cs-back">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 12L6 8l4-4"/>
+      </svg>
+      SyncoPro
+    </a>
+
+    <!-- PAGE HEADER -->
+    <header class="cs-header">
+      <div class="cs-eyebrow">
+        <span class="cs-pill">Founder Lens</span>
+        <span class="cs-pill cs-pill--blue">Decision Infrastructure</span>
+        <span class="cs-pill cs-pill--grey">Thinking Frame</span>
+      </div>
+      <h1 class="cs-h1">Founder Lens —<br><span>Designing Decision Infrastructure</span></h1>
+      <p class="cs-lead">This page is not about what SyncoPro is. It is about how I think about decision systems, AI, and product design at a structural level — the beliefs, methods, and constraints that shaped the architecture before a single line of code was written.</p>
+    </header>
+
+    <!-- SECTION 01 — CORE BELIEFS -->
+    <section class="cs-section" id="beliefs">
+      <span class="cs-section-index">01 / 05</span>
+      <h2 class="cs-h2">Core Beliefs</h2>
+      <p class="cs-p">These are not conclusions — they are the structural assumptions I test products against.</p>
+
+      <div class="cs-belief-grid">
+
+        <div class="cs-belief">
+          <div class="cs-belief-title">Decision quality is a system property, not an individual trait.</div>
+          <div class="cs-belief-body">Most organizations attribute poor decisions to individuals — the wrong hire, the wrong call. The more accurate diagnosis is structural: the system around the decision lacked clarity, governance, or feedback. Improving individual judgment without improving the system produces marginal gains. Improving the system scales.</div>
+        </div>
+
+        <div class="cs-belief">
+          <div class="cs-belief-title">Most product failure is structural, not executional.</div>
+          <div class="cs-belief-body">Teams that ship the wrong thing rarely do so because they worked slowly or lacked skill. They do so because the decision infrastructure upstream was insufficient — intent was unclear, authority was ambiguous, readiness was assumed rather than verified. Execution tools cannot compensate for structural gaps in the decisions that drive them.</div>
+        </div>
+
+        <div class="cs-belief">
+          <div class="cs-belief-title">AI is a redistribution of authority, not just automation.</div>
+          <div class="cs-belief-body">When AI enters a workflow, it does not simply speed things up — it shifts where decisions originate and who is accountable for them. That shift is often invisible, which is the problem. Governance must define AI's operating scope before AI is deployed, not after. A system that cannot answer "where does AI authority end?" has no real governance model.</div>
+        </div>
+
+        <div class="cs-belief">
+          <div class="cs-belief-title">Planning without governance creates invisible risk.</div>
+          <div class="cs-belief-body">A plan without a governance layer is a list of intentions. It has no mechanism for verifying whether the right people have confirmed the right decisions, whether authority boundaries are respected, or whether the assumptions embedded in the plan have been stress-tested. The risk does not disappear — it becomes invisible until it surfaces as execution failure.</div>
+        </div>
+
+        <div class="cs-belief">
+          <div class="cs-belief-title">Systems should degrade gracefully, not fail silently.</div>
+          <div class="cs-belief-body">Robust systems do not pretend to handle edge cases they cannot handle. When confidence is low, scope is unclear, or authority is ambiguous, the system should surface that signal and route to human judgment. A system that always appears confident is not trustworthy — it has just hidden its uncertainty from the people who need to act on it.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 02 — HOW I DESIGN SYSTEMS -->
+    <section class="cs-section" id="approach">
+      <span class="cs-section-index">02 / 05</span>
+      <h2 class="cs-h2">How I Design Systems</h2>
+      <p class="cs-p">Five principles that shape how I approach product architecture — from the first structural question to the final governance boundary.</p>
+
+      <div class="cs-approach-grid">
+
+        <div class="cs-approach-cell">
+          <div class="cs-approach-kicker">Principle 01</div>
+          <div class="cs-approach-title">Start from failure patterns, not features</div>
+          <div class="cs-approach-desc">Before defining what a system should do, I map the structural ways it could fail. Features derived from failure patterns have a higher probability of addressing root causes. Features derived from market signals or competitive analysis tend to treat symptoms. The question is not "what do users want?" but "what breaks without this, and why?"</div>
+        </div>
+
+        <div class="cs-approach-cell">
+          <div class="cs-approach-kicker">Principle 02</div>
+          <div class="cs-approach-title">Define boundaries before capabilities</div>
+          <div class="cs-approach-desc">What a system cannot do is as important as what it can. Boundary definition prevents scope creep, clarifies authority, and makes the system's behavior predictable under pressure. I define AI boundaries before deploying AI. I define governance scope before building governance routing. Capability without a defined boundary is architectural debt.</div>
+        </div>
+
+        <div class="cs-approach-cell">
+          <div class="cs-approach-kicker">Principle 03</div>
+          <div class="cs-approach-title">Build layers, not flows</div>
+          <div class="cs-approach-desc">Flows describe sequence. Layers describe structural dependencies. A system built as a flow can be optimized for speed but cannot be extended without breaking the sequence. A system built as layers can evolve each layer independently while preserving the structural integrity of the whole. Infrastructure products require layers.</div>
+        </div>
+
+        <div class="cs-approach-cell">
+          <div class="cs-approach-kicker">Principle 04</div>
+          <div class="cs-approach-title">Treat AI as a constrained actor</div>
+          <div class="cs-approach-desc">AI is most reliable when its operating scope is narrow, explicit, and enforced by the system — not assumed by the user. I design AI components with explicit authority ceilings: defined inputs, defined outputs, defined escalation conditions. The goal is not to maximize AI capability but to make AI behavior predictable and auditable within the governance model.</div>
+        </div>
+
+        <div class="cs-approach-cell">
+          <div class="cs-approach-kicker">Principle 05</div>
+          <div class="cs-approach-title">Optimize for decision clarity, not speed</div>
+          <div class="cs-approach-desc">Speed is a natural output of reduced friction. Clarity is a structural property. A system that makes decision intent clear, authority explicit, and readiness visible will produce faster decisions as a byproduct — without sacrificing governance. Optimizing directly for speed tends to suppress the signals that would have prevented a poor decision.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 03 — WHAT I DON'T BELIEVE -->
+    <section class="cs-section" id="counter">
+      <span class="cs-section-index">03 / 05</span>
+      <h2 class="cs-h2">What I Don't Believe</h2>
+      <p class="cs-p">Constraints that have shaped more architectural decisions than any positive principle.</p>
+
+      <div class="cs-counter">
+
+        <div class="cs-counter-item">
+          <span class="cs-counter-mark">✕</span>
+          <span class="cs-counter-text"><strong>More features does not mean better product.</strong> Feature accumulation increases surface area without necessarily increasing structural coherence. The most defensible products do fewer things with greater precision. Every added capability is also a governance surface that must be defined and maintained.</span>
+        </div>
+
+        <div class="cs-counter-item">
+          <span class="cs-counter-mark">✕</span>
+          <span class="cs-counter-text"><strong>Faster output does not mean better decisions.</strong> Reducing the time between intent and action is not valuable if the decision itself was not ready. Speed without readiness produces faster failure. The goal is not to compress the decision cycle — it is to make the cycle structurally sound before compressing it.</span>
+        </div>
+
+        <div class="cs-counter-item">
+          <span class="cs-counter-mark">✕</span>
+          <span class="cs-counter-text"><strong>AI replacing humans is the wrong framing.</strong> The productive question is not whether AI replaces human judgment, but where AI authority ends and human accountability begins — and whether that boundary is architecturally enforced or merely assumed. Most current AI deployments have no answer to that question.</span>
+        </div>
+
+        <div class="cs-counter-item">
+          <span class="cs-counter-mark">✕</span>
+          <span class="cs-counter-text"><strong>User-friendly does not mean structurally sound.</strong> A system can be easy to use and structurally incorrect. Ease of use is a surface property. Structural correctness is an architectural property. Optimizing for ease of use before the architecture is sound tends to lock in structural flaws behind polished interactions.</span>
+        </div>
+
+      </div>
+
+      <div class="cs-pullquote">
+        <p>"What I refuse to build tells you as much about the architecture as what I chose to build."</p>
+      </div>
+    </section>
+
+    <!-- SECTION 04 — WHY THIS MATTERS NOW -->
+    <section class="cs-section" id="timing">
+      <span class="cs-section-index">04 / 05</span>
+      <h2 class="cs-h2">Why This Matters Now</h2>
+
+      <div class="cs-h3">AI is entering workflows without governance infrastructure in place</div>
+      <p class="cs-p">Enterprise teams are deploying AI into planning, prioritization, and decision workflows faster than governance frameworks are evolving to cover them. The result is not visible failure — it is invisible authority drift. Decisions that should require human confirmation are being resolved by AI systems whose operating scope has never been formally defined. The risk accumulates quietly.</p>
+
+      <div class="cs-h3">Decision complexity is increasing at the same time</div>
+      <p class="cs-p">The conditions under which product decisions are made — multi-stakeholder environments, compressed timelines, incomplete information, AI-generated outputs feeding human workflows — are becoming structurally more complex. Tools designed for simpler decision contexts are not keeping pace. The gap between the complexity of the environment and the sophistication of the infrastructure is widening.</p>
+
+      <div class="cs-h3">Tools are not evolving fast enough at the right layer</div>
+      <p class="cs-p">The market is producing more AI-assisted features for existing planning categories — smarter project tracking, faster document generation, better status summaries. None of this addresses the structural layer: the system that determines whether a decision was ready before it was made, who had authority to make it, and whether the governance model held. That layer does not yet have a product category. This is the problem that is becoming unavoidable.</p>
+
+      <div class="cs-pullquote">
+        <p>"The absence of decision infrastructure is not a product gap yet. It is becoming one — and it will be obvious in retrospect."</p>
+      </div>
+    </section>
+
+    <!-- SECTION 05 — CLOSING STATEMENT -->
+    <section class="cs-section" id="closing" style="border-bottom: none;">
+      <span class="cs-section-index">05 / 05</span>
+      <h2 class="cs-h2">What I Am Building Toward</h2>
+
+      <p class="cs-p">I am interested in building systems that make decision quality visible, governable, and improvable over time. Not faster, not smarter in isolation — but structurally sound in a way that holds under real organizational conditions: competing authority, incomplete information, time pressure, and AI operating inside the workflow.</p>
+
+      <p class="cs-p">The systems I find most worth building are the ones where the structural problem is clear, the market gap is real, and the architecture is non-obvious. Decision infrastructure is all three. The reason it has not been built yet is that it requires holding a complex model across multiple layers simultaneously — governance, readiness, AI boundaries, feedback — without collapsing it into a simpler category to make it easier to sell.</p>
+
+      <p class="cs-p">SyncoPro is my attempt to hold that model. The Founder Lens is the thinking frame behind it.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- STRUCTURED FOOTER -->
+<footer class="footer--structured" role="contentinfo">
+  <div class="container">
+    <nav class="footer__nav" aria-label="Site navigation">
+      <div>
+        <span class="footer__col-label">Decision Architecture</span>
+        <ul class="footer__col-links">
+          <li><a href="../../../index.html#decision-architecture" class="footer__col-link">Overview</a></li>
+          <li><a href="../../../decision-architecture/product-subcontracting.html" class="footer__col-link">Product Layer</a></li>
+          <li><a href="../../../decision-architecture/organization-governance-architecture.html" class="footer__col-link">Organizational Layer</a></li>
+          <li><a href="../../../decision-architecture/ai-decision-architecture.html" class="footer__col-link">AI Layer</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-label">Product Systems</span>
+        <ul class="footer__col-links">
+          <li><a href="../../../index.html#founder" class="footer__col-link">Overview</a></li>
+          <li><a href="../../../founder/syncopro/index.html" class="footer__col-link">SyncoPro</a></li>
+          <li><a href="../../../founder/syncopro/founder-lens/index.html" class="footer__col-link" aria-current="page">SyncoPro Founder Lens</a></li>
+          <li><a href="../../../founder/syncopro/Vision/index.html" class="footer__col-link">SyncoPro Vision</a></li>
+          <li><a href="../../../founder/syncopro/Pitch-deck/index.html" class="footer__col-link">SyncoPro Deck</a></li>
+          <li><a href="../../../founder/mighty-coupons/index.html" class="footer__col-link">Mighty Coupons</a></li>
+          <li><a href="../../../founder/refermejob/index.html" class="footer__col-link">ReferMeJob</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-label">Vibe Coding</span>
+        <ul class="footer__col-links">
+          <li><a href="../../../index.html#vibe-coding" class="footer__col-link">Overview</a></li>
+          <li><a href="../../../vibe-coding/design-code-demo.html" class="footer__col-link">Design → Code → Demo</a></li>
+          <li><a href="../../../decision-architecture/ai-decision/ai-systems-library.html" class="footer__col-link">AI Systems Library</a></li>
+          <li><a href="../../../decision-architecture/ai-decision/sap-product-ai-system.html" class="footer__col-link">SAP Product AI System</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-label">Earlier Work (Archive)</span>
+        <ul class="footer__col-links">
+          <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">View Archive</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-label">General</span>
+        <ul class="footer__col-links">
+          <li><a href="../../../index.html#about" class="footer__col-link">About</a></li>
+          <li><a href="mailto:katejieyu@gmail.com" class="footer__col-link">Contact</a></li>
+          <li><a href="https://katejieyudesign.com/kate-studio/" class="footer__col-link" target="_blank" rel="noopener noreferrer">Archive</a></li>
+          <li><a href="../../../sitemap.html" class="footer__col-link">Sitemap</a></li>
+          <li><a href="../../../kateyu-resume.html" class="footer__col-link">Resume</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="footer__bottom">
+      <p class="footer__bottom-copy">&copy; 2016 &ndash; <script>document.write((new Date()).getFullYear())</script> Kate Jie Yu &middot; AI Product Systems Designer · Founder · Decision Infrastructure</p>
+      <div class="footer__bottom-links">
+        <a href="https://katejieyudesign.com/kate-studio/" class="footer__bottom-link" target="_blank" rel="noopener noreferrer">Archive</a>
+        <a href="../../../sitemap.html" class="footer__bottom-link">Sitemap</a>
+        <a href="../../../kateyu-resume.html" class="footer__bottom-link">Resume</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../../../js/staff-portfolio.js"></script>
+</body>
+</html>
