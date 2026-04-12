@@ -230,7 +230,7 @@
       const staggerDelay = Math.min(siblingIndex * 0.08, 0.4); // cap at 400ms
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
-      el.style.transition = `opacity 0.6s ease-out ${staggerDelay}s, transform 0.6s ease-out ${staggerDelay}s`;
+      el.style.transition = `opacity 0.35s ease-out ${staggerDelay}s, transform 0.35s ease-out ${staggerDelay}s`;
       observer.observe(el);
     });
   }
